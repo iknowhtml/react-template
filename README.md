@@ -1,12 +1,12 @@
-# Static HTML Template
-A template for creating static HTML views with the latest CSS, Linting and Hot Reloading HTML & CSS.
+# React Boilerplate Template
+A boilerplate React template.
 
 ### To use
 Checkout this repo, install dependencies, then run the following commands in the terminal.
 
 ```
-> git clone https://github.com/iknowhtml/static-html-template.git
-> cd static-html-template
+> git clone https://github.com/iknowhtml/react-template.git
+> cd react-template
 > yarn install
 ```
 Then run `yarn start` to start the application in development mode.

@@ -2,6 +2,7 @@ import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { HotModuleReplacementPlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackTemplate from 'html-webpack-template';
 import TerserJSPlugin from 'terser-webpack-plugin';
 import OptimizeCssAssetsWebpackPlugin from 'optimize-css-assets-webpack-plugin';
 
@@ -10,13 +11,13 @@ const webpackConfiguration = (env, argv) => ({
   entry: path.resolve('src', 'index.js'),
   output: {
     path: path.resolve('dist'),
-    filename: 'index.js',
+    filename: '[name].bundle.[hash].js',
   },
   // Configures Loaders
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -42,8 +43,8 @@ const webpackConfiguration = (env, argv) => ({
     new HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: '',
-      filename: 'index.html',
-      template: path.resolve('src', 'index.ejs'),
+      template: HtmlWebpackTemplate,
+      appMountId: 'app',
       minify:
         process.env.NODE_ENV === 'production'
           ? {
@@ -64,15 +65,15 @@ const webpackConfiguration = (env, argv) => ({
     }),
   ],
   // Configures Optimizations
-  optimization:
-    process.env.NODE_ENV === 'production'
-      ? {
-          minimizer: [
-            new TerserJSPlugin({}),
-            new OptimizeCssAssetsWebpackPlugin({}),
-          ],
-        }
-      : {},
+  optimization: {
+    minimizer:
+      process.env.NODE_ENV === 'production'
+        ? [new TerserJSPlugin({}), new OptimizeCssAssetsWebpackPlugin({})]
+        : [],
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   //Configures Webpack DevServer
   devServer: {
     port: 8080,
@@ -83,9 +84,6 @@ const webpackConfiguration = (env, argv) => ({
       warnings: true,
       errors: true,
     },
-    // Sets and watches the content base so that dev server will reload page on HTML changes
-    contentBase: path.resolve('src'),
-    watchContentBase: true,
   },
 });
 
