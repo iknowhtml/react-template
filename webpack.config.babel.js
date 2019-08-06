@@ -6,8 +6,10 @@ import HtmlWebpackTemplate from 'html-webpack-template';
 import TerserJSPlugin from 'terser-webpack-plugin';
 import OptimizeCssAssetsWebpackPlugin from 'optimize-css-assets-webpack-plugin';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // Two parameters are passed in at bundle time, env & argv. argv contains all flags passed into webpack, including mode.
-const webpackConfiguration = (env, argv) => ({
+const webpackConfiguration = () => ({
   entry: path.resolve('src', 'index.js'),
   output: {
     path: path.resolve('dist'),
@@ -29,7 +31,7 @@ const webpackConfiguration = (env, argv) => ({
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: process.env.NODE_ENV === 'development',
+              hmr: isProduction,
             },
           },
           'css-loader',
@@ -45,18 +47,17 @@ const webpackConfiguration = (env, argv) => ({
       title: '',
       template: HtmlWebpackTemplate,
       appMountId: 'app',
-      minify:
-        process.env.NODE_ENV === 'production'
-          ? {
-              collapseWhitespace: true,
-              removeComments: true,
-              removeRedundantAttributes: true,
-              removeScriptTypeAttributes: true,
-              removeStyleLinkTypeAttributes: true,
-              useShortDoctype: true,
-            }
-          : false,
-      hash: process.env.NODE_ENV === 'production',
+      minify: isProduction
+        ? {
+            collapseWhitespace: true,
+            removeComments: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            useShortDoctype: true,
+          }
+        : false,
+      hash: isProduction,
       //Prevents automatic injection of CSS & HTML into template.
       inject: false,
     }),
@@ -66,10 +67,9 @@ const webpackConfiguration = (env, argv) => ({
   ],
   // Configures Optimizations
   optimization: {
-    minimizer:
-      process.env.NODE_ENV === 'production'
-        ? [new TerserJSPlugin({}), new OptimizeCssAssetsWebpackPlugin({})]
-        : [],
+    minimizer: isProduction
+      ? [new TerserJSPlugin({}), new OptimizeCssAssetsWebpackPlugin({})]
+      : [],
     splitChunks: {
       chunks: 'all',
     },
