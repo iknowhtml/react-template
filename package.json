@@ -3,7 +3,9 @@
     "start": "sleep 5s && open http://localhost:8080 & nodemon --watch webpack.config.babel.js --exec \"NODE_ENV=\"development\" webpack-dev-server --watch\"",
     "build": "yarn clean && NODE_ENV=production webpack --progress --colors --mode production",
     "test": "jest",
-    "clean": "rm -rf dist/*"
+    "clean": "rm -rf dist/*",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "jest": {
     "setupFiles": [
@@ -17,6 +19,10 @@
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.8.3",
+    "@storybook/addon-actions": "^5.3.9",
+    "@storybook/addon-links": "^5.3.9",
+    "@storybook/addons": "^5.3.9",
+    "@storybook/react": "^5.3.9",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
