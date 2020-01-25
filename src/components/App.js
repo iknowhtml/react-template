@@ -5,6 +5,6 @@ const Container = styled.div`
   font-size: 2em;
 `;
 
-const App = () => <Container>App</Container>;
+const App = () => <Container>React Template</Container>;
 
 export default App;
