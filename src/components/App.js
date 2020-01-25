@@ -1,5 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import styled from '@emotion/styled';
 
-const App = () => <Fragment>App</Fragment>;
+const Container = styled.div`
+  font-size: 2em;
+`;
+
+const App = () => <Container>App</Container>;
 
 export default App;
