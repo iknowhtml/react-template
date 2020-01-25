@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "sleep 5s && open http://localhost:8080 & nodemon --watch webpack.config.babel.js --exec \"NODE_ENV=\"development\" webpack-dev-server --watch\"",
+    "start": "nodemon --watch webpack.config.babel.js --exec \"NODE_ENV=\"development\" webpack-dev-server --watch\"",
     "build": "yarn clean && NODE_ENV=production webpack --progress --colors --mode production",
     "test": "jest",
     "clean": "rm -rf dist/*",
