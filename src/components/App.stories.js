@@ -2,7 +2,7 @@ import React from 'react';
 import App from './App';
 
 export default {
-  title: 'Default',
+  title: 'All',
   component: App,
 };
 
